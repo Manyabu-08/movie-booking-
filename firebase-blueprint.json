@@ -1,0 +1,637 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated CineBook AI user profile and genre preferences.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "favoriteGenres": {
+          "type": "array",
+          "description": "Up to 12 favorite cinema genres."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user"]
+        },
+        "photoUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "aiPersonalizationConsent": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "displayName", "city", "favoriteGenres", "role", "createdAt", "updatedAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Trusted administrator access record.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "grantedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "grantedAt"]
+    },
+    "Movie": {
+      "title": "Movie",
+      "description": "Cinema movie listing with Gemini AI categorization metadata.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "synopsis": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "posterUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "bannerUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "trailerUrl": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "language": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "durationMinutes": {
+          "type": "number"
+        },
+        "rating": {
+          "type": "number"
+        },
+        "officialCertification": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "releaseDate": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "status": {
+          "type": "string",
+          "enum": ["now_showing", "coming_soon"]
+        },
+        "trending": {
+          "type": "boolean"
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "cities": {
+          "type": "array"
+        },
+        "cast": {
+          "type": "array"
+        },
+        "primaryCategory": {
+          "type": "string",
+          "enum": [
+            "Horror",
+            "Family",
+            "Comedy",
+            "Action",
+            "Romance",
+            "Thriller",
+            "Science Fiction",
+            "Animation",
+            "Adventure",
+            "Drama",
+            "Mystery",
+            "Fantasy"
+          ]
+        },
+        "secondaryCategories": {
+          "type": "array"
+        },
+        "moodTags": {
+          "type": "array"
+        },
+        "aiExplanation": {
+          "type": "string",
+          "maxLength": 600
+        },
+        "aiFamilyFriendlyAssessment": {
+          "type": "string",
+          "enum": ["likely_family_friendly", "caution_advised", "adult_themes", "uncertain"]
+        },
+        "aiFamilyFriendlyNote": {
+          "type": "string",
+          "maxLength": 300
+        },
+        "aiReviewedByAdmin": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "synopsis",
+        "posterUrl",
+        "language",
+        "durationMinutes",
+        "rating",
+        "officialCertification",
+        "releaseDate",
+        "status",
+        "trending",
+        "featured",
+        "cities",
+        "cast",
+        "primaryCategory",
+        "secondaryCategories",
+        "moodTags",
+        "aiExplanation",
+        "aiFamilyFriendlyAssessment",
+        "aiFamilyFriendlyNote",
+        "aiReviewedByAdmin",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Theatre": {
+      "title": "Theatre",
+      "description": "Cinema multiplex theatre venue.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "address": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        },
+        "screens": {
+          "type": "number"
+        },
+        "amenities": {
+          "type": "array"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["id", "name", "city", "address", "screens", "amenities", "createdAt", "updatedAt"]
+    },
+    "Showtime": {
+      "title": "Showtime",
+      "description": "Database-driven movie screening slot with seat occupancy.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "movieId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "theatreId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "screenName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "showDate": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "showTime": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "format": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30
+        },
+        "standardPrice": {
+          "type": "number"
+        },
+        "premiumPrice": {
+          "type": "number"
+        },
+        "convenienceFeePerTicket": {
+          "type": "number"
+        },
+        "bookedSeats": {
+          "type": "array"
+        },
+        "heldSeats": {
+          "type": "object"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "movieId",
+        "theatreId",
+        "city",
+        "screenName",
+        "showDate",
+        "showTime",
+        "format",
+        "standardPrice",
+        "premiumPrice",
+        "convenienceFeePerTicket",
+        "bookedSeats",
+        "heldSeats",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SeatReservation": {
+      "title": "SeatReservation",
+      "description": "Temporary seat hold prior to demo payment confirmation.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "showtimeId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "movieId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "theatreId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "seats": {
+          "type": "array"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending_payment", "confirmed", "cancelled", "expired"]
+        },
+        "ticketAmount": {
+          "type": "number"
+        },
+        "convenienceFee": {
+          "type": "number"
+        },
+        "totalAmount": {
+          "type": "number"
+        },
+        "expiresAtMs": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "showtimeId",
+        "movieId",
+        "theatreId",
+        "seats",
+        "status",
+        "ticketAmount",
+        "convenienceFee",
+        "totalAmount",
+        "expiresAtMs",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Confirmed cinema ticket booking with digital ticket reference.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "bookingCode": {
+          "type": "string",
+          "minLength": 6,
+          "maxLength": 40,
+          "pattern": "^[A-Z0-9\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userEmail": {
+          "type": "string",
+          "format": "email",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "userName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "movieId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "movieTitle": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "posterUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "theatreId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "theatreName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "showtimeId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "screenName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "showDate": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "showTime": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20
+        },
+        "format": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30
+        },
+        "seats": {
+          "type": "array"
+        },
+        "ticketAmount": {
+          "type": "number"
+        },
+        "convenienceFee": {
+          "type": "number"
+        },
+        "totalAmount": {
+          "type": "number"
+        },
+        "paymentId": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 80
+        },
+        "paymentStatus": {
+          "type": "string",
+          "enum": ["paid", "failed"]
+        },
+        "bookingStatus": {
+          "type": "string",
+          "enum": ["confirmed", "cancelled"]
+        },
+        "reservationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "qrReference": {
+          "type": "string",
+          "minLength": 6,
+          "maxLength": 160
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "bookingCode",
+        "userId",
+        "userEmail",
+        "userName",
+        "movieId",
+        "movieTitle",
+        "posterUrl",
+        "theatreId",
+        "theatreName",
+        "city",
+        "showtimeId",
+        "screenName",
+        "showDate",
+        "showTime",
+        "format",
+        "seats",
+        "ticketAmount",
+        "convenienceFee",
+        "totalAmount",
+        "paymentId",
+        "paymentStatus",
+        "bookingStatus",
+        "reservationId",
+        "qrReference",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles and genre preferences isolated per owner."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Admin role registry controlled strictly by existing admins."
+    },
+    "/movies/{movieId}": {
+      "schema": { "$ref": "#/entities/Movie" },
+      "description": "Public movie catalog with Gemini AI categorization metadata."
+    },
+    "/theatres/{theatreId}": {
+      "schema": { "$ref": "#/entities/Theatre" },
+      "description": "Public multiplex theatre listings by city."
+    },
+    "/showtimes/{showtimeId}": {
+      "schema": { "$ref": "#/entities/Showtime" },
+      "description": "Showtime schedules and atomic seat availability."
+    },
+    "/seatReservations/{reservationId}": {
+      "schema": { "$ref": "#/entities/SeatReservation" },
+      "description": "User-owned temporary seat reservations prior to payment."
+    },
+    "/bookings/{bookingId}": {
+      "schema": { "$ref": "#/entities/Booking" },
+      "description": "User-owned confirmed cinema ticket bookings."
+    }
+  }
+}

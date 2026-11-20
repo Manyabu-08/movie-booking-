@@ -1,0 +1,8 @@
+{
+  "name": "CineBook AI",
+  "description": "AI-powered movie ticket booking platform with Gemini categorization, natural-language movie recommendations, interactive cinema seat selection, and Cloud Firestore persistence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
